@@ -1,0 +1,30 @@
+For a finite Markov Decision Process:
+States:     S[t] in 𝕊
+Actions:    A[t] in 𝔸
+Rewards:    R[t],
+
+Policy:     π : 𝕊 ⟶ 𝔸
+            A[t] = π(S[t])
+
+We wish to maximize future rewards (0 <= γ <= 1):
+            R[t+1] + γ R[t+2] + γ^2 R[t+3] + …
+
+Action Value Function [AVF] associated with a policy π:
+    q[π; s, a] = 𝔼[R[t+1] + γ R[t+2] + γ^2 R[t+3] + …   | S[t] == s, A[t] == a, A[t+1:∞] ~ π]
+               ≈ 𝔼[R[t+1] + γ q[π; S[t+1], A[t+1] ]     | S[t] == s, A[t] == a, A[t+1] ~ π]
+
+An optimal policy maximizes the AVF
+    q[π; s, a] = max_π q[π; s, a], for all s, action
+(Note: all optimal policies share the same q_π)
+
+Given an optimal AVF q_π, not that
+    π[s] = argmax_a q[π; s, a] 
+is an optimal policy.
+
+Q learning:
+    Take a random array Q[s, a], this will function as our best attempt at an optimal AVF
+    ΔQ[ S[t], A[t] ] = α ( R[t+1] + γ max_a{ Q[ S[t+1], a ]} - Q[ S[t], A[t] ] )
+
+ALTERNATIEF
+    ΔQ[ S[t], A[t] ] = α ( R[t+1] + γ Q[ S[t+1], A[t+1] ] - Q[ S[t], A[t] ] )
+
